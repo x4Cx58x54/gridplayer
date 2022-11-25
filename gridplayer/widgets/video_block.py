@@ -8,7 +8,7 @@ from typing import Optional, Tuple
 from pydantic.color import Color
 from PyQt5.QtCore import Qt, QTimer, pyqtSignal
 from PyQt5.QtGui import QCursor
-from PyQt5.QtWidgets import QStackedLayout, QWidget
+from PyQt5.QtWidgets import QStackedLayout, QWidget, QApplication
 
 from gridplayer.dialogs.input_dialog import QCustomSpinboxInput, QCustomSpinboxTimeInput
 from gridplayer.dialogs.rename_dialog import QVideoRenameDialog
@@ -31,6 +31,7 @@ from gridplayer.params.static import (
 from gridplayer.settings import Settings
 from gridplayer.utils.next_file import next_video_file, previous_video_file
 from gridplayer.utils.qt import qt_connect, translate
+from gridplayer.utils.time_txt import get_time_txt
 from gridplayer.utils.url_resolve.static import ResolvedVideo
 from gridplayer.utils.url_resolve.url_resolve import VideoURLResolver
 from gridplayer.vlc_player.static import MediaInput
@@ -389,6 +390,9 @@ class VideoBlock(QWidget):  # noqa: WPS230
     def mousePressEvent(self, event) -> None:
         if Settings().get("internal/fake_overlay_invisibility"):
             self.window().raise_()
+
+        if event.button() == Qt.MiddleButton:
+            QApplication.clipboard().setText(get_time_txt(self.time, show_days=False))
 
         super().mousePressEvent(event)
 
