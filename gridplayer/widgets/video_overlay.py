@@ -169,8 +169,8 @@ class OverlayBlock(QWidget):  # noqa: WPS230
     def set_position(self, position, length):
         position_percent = position / length
 
-        position_txt = get_time_txt(position // 1000, length // 1000)
-        length_txt = get_time_txt(length // 1000)
+        position_txt = get_time_txt(position, length)
+        length_txt = get_time_txt(length)
 
         if length == -1:
             self.floating_progress.hide()

@@ -1,38 +1,41 @@
-import time
 from typing import Optional
 
-HOUR_SECONDS = 3600
-DAY_SECONDS = HOUR_SECONDS * 24
+SEC_MS = 1000
+MIN_MS = SEC_MS * 60
+HOUR_MS = MIN_MS * 60
+DAY_MS = HOUR_MS * 24
 
 
 def get_time_txt(
-    seconds: int, max_seconds: Optional[int] = None, strip: bool = False
+    ms: int, max_ms: Optional[int] = None, strip: bool = False,
+    show_days: bool = True
 ) -> str:
-    if max_seconds and max_seconds < seconds:
-        max_seconds = None
 
-    seconds_cnt = max_seconds or seconds
+    if max_ms and max_ms < ms:
+        max_ms = None
 
-    if seconds >= DAY_SECONDS:
-        days, seconds_cnt = divmod(seconds, DAY_SECONDS)
+    max_ms = max_ms or ms
+
+    n_day, ms = divmod(ms, DAY_MS)
+    n_hour, ms = divmod(ms, HOUR_MS)
+    n_min, ms = divmod(ms, MIN_MS)
+    n_sec, ms = divmod(ms, SEC_MS)
+
+    if show_days:
+        n_hour += n_day * 24
+        n_day = 0
+
+    if max_ms >= HOUR_MS:
+        clock = f'{n_hour:02d}:{n_min:02d}:{n_sec:02d}.{ms:03d}'
+    elif max_ms >= MIN_MS:
+        clock = f'{n_min:02d}:{n_sec:02d}.{ms:03d}'
     else:
-        days = 0
+        clock = f'0:{n_sec:02d}.{ms:03d}'
 
-    clock = _fmt_time(seconds, seconds_cnt)
-
-    if strip and seconds_cnt >= 60:
+    if strip and max_ms >= MIN_MS:
         clock = clock.lstrip("0")
 
-    if days:
-        return f"{days}d {clock}"
+    if n_day > 0:
+        clock = f'{n_day}d {clock}'
 
     return clock
-
-
-def _fmt_time(seconds, seconds_cnt):
-    if seconds_cnt >= HOUR_SECONDS:
-        return time.strftime("%H:%M:%S", time.gmtime(seconds))
-    elif seconds_cnt >= 60:
-        return time.strftime("%M:%S", time.gmtime(seconds))
-
-    return time.strftime("0:%S", time.gmtime(seconds))

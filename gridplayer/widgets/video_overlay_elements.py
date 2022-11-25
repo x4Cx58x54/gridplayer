@@ -153,7 +153,7 @@ class OverlayShortLabelFloating(OverlayShortLabel):
         if self.length is None:
             return
 
-        new_time = int((self.length * progress_pos) // 1000)
+        new_time = int(self.length * progress_pos)
         self.text = get_time_txt(new_time, strip=True)
 
         x_middle = round(self.rect().width() / 2)
