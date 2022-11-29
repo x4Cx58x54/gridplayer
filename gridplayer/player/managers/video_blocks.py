@@ -1,3 +1,5 @@
+import csv
+from pathlib import Path
 import random
 from typing import List, Optional
 
@@ -9,6 +11,7 @@ from gridplayer.params.static import SeekSyncMode, VideoAspect, VideoRepeat
 from gridplayer.player.managers.base import ManagerBase
 from gridplayer.settings import Settings
 from gridplayer.utils.qt import qt_connect, translate
+from gridplayer.utils.time_txt import get_time_txt
 from gridplayer.widgets.video_block import VideoBlock
 
 
@@ -164,6 +167,7 @@ class VideoBlocksManager(ManagerBase):
             "is_disable_wheel_seek": lambda: self._ctx.is_disable_wheel_seek,
             "set_disable_wheel_seek": self.set_disable_wheel_seek,
             "toggle_disable_wheel_seek": self.toggle_disable_wheel_seek,
+            "mark_time": self.mark_time,
         }
 
     def cmd_all(self, command, *args):
@@ -222,6 +226,29 @@ class VideoBlocksManager(ManagerBase):
 
     def toggle_disable_wheel_seek(self):
         self._ctx.is_disable_wheel_seek = not self._ctx.is_disable_wheel_seek
+
+    def mark_time(self):
+        vb_inited = self._ctx.video_blocks.initialized
+        if len(vb_inited) == 0:
+            return
+        vb_time_marked = [
+            (
+                vb,
+                Path(vb.video_params.uri).name,
+                get_time_txt(vb.video_params.current_position, strip=True, show_days=False),
+            )
+            for vb in vb_inited
+        ]
+        vb_marked, video_names, time_texts = zip(*vb_time_marked)
+        log_path = Path(Settings().get('playlist/time_marks_log_path'))/','.join(sorted(video_names))
+        log_path = str(log_path.absolute()) + '.csv'
+        with open(log_path, 'a', newline='') as csvfile:
+            writer = csv.DictWriter(csvfile, fieldnames=sorted(video_names))
+            if csvfile.tell() == 0:
+                writer.writeheader()
+            writer.writerow({k: v for k, v in zip(video_names, time_texts)})
+        for vb, t in zip(vb_marked, time_texts):
+            vb.info_change.emit(f'Marked at {t}')
 
     def seek_sync_percent(self, percent):
         if self._ctx.seek_sync_mode == SeekSyncMode.PERCENT:

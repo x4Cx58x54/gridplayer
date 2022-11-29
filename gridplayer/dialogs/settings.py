@@ -4,7 +4,7 @@ import subprocess
 
 from PyQt5.QtCore import QLocale, QUrl
 from PyQt5.QtGui import QDesktopServices, QIcon, QPalette
-from PyQt5.QtWidgets import QCheckBox, QComboBox, QDialog, QLineEdit, QSpinBox
+from PyQt5.QtWidgets import QCheckBox, QComboBox, QDialog, QLineEdit, QSpinBox, QFileDialog, QPushButton
 
 from gridplayer.dialogs.messagebox import QCustomMessageBox
 from gridplayer.dialogs.settings_dialog_ui import Ui_SettingsDialog
@@ -84,6 +84,7 @@ class SettingsDialog(QDialog, Ui_SettingsDialog):
             "playlist/track_changes": self.playlistTrackChanges,
             "playlist/disable_click_pause": self.playlistDisableClickPause,
             "playlist/disable_wheel_seek": self.playlistDisableWheelSeek,
+            "playlist/time_marks_log_path": self.playlistTimeMarksLogPath,
             "video_defaults/aspect": self.videoAspect,
             "video_defaults/repeat": self.repeatMode,
             "video_defaults/random_loop": self.videoRandomLoop,
@@ -190,6 +191,7 @@ class SettingsDialog(QDialog, Ui_SettingsDialog):
             (self.logLimit.stateChanged, self.logLimitSize.setEnabled),
             (self.logLimit.stateChanged, self.logLimitBackups.setEnabled),
             (self.streamingWildcardHelpButton.clicked, self.toggle_wildcard_help),
+            (self.playlistTimeMarksLogPath.clicked, self.set_time_mark_log_location)
         )
 
     def toggle_wildcard_help(self):
@@ -386,6 +388,12 @@ class SettingsDialog(QDialog, Ui_SettingsDialog):
         else:
             self.playerVideoDriverPlayers.setDisabled(True)
 
+    def set_time_mark_log_location(self):
+        folder = QFileDialog.getExistingDirectory(
+            self, 'Select time marks log folder', '')
+        if folder:
+            self.playlistTimeMarksLogPath.setText(str(folder))
+
     def load_settings(self):
         elements_value_set_fun = {
             QCheckBox: lambda e, v: e.setChecked(v),
@@ -394,6 +402,7 @@ class SettingsDialog(QDialog, Ui_SettingsDialog):
             QComboBox: _set_combo_box,
             LanguageList: lambda e, v: e.setValue(v),
             ResolverPatternsList: lambda e, v: e.setDataRows(v),
+            QPushButton: lambda e, v: e.setText(v),
         }
 
         for setting, element in self.settings_map.items():
@@ -414,6 +423,7 @@ class SettingsDialog(QDialog, Ui_SettingsDialog):
             QComboBox: "currentData",
             LanguageList: "value",
             ResolverPatternsList: "rows_data",
+            QPushButton: "text",
         }
 
         for setting, element in self.settings_map.items():

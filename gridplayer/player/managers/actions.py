@@ -943,6 +943,13 @@ COMMANDS = MappingProxyType(
             "func": "toggle_disable_wheel_seek",
             "check_if": "is_disable_wheel_seek",
         },
+        "Mark Time": {
+            "title": translate("Actions", "Mark Time"),
+            "key": "M",
+            "icon": "mark-time",
+            "func": "mark_time",
+            "show_if": "is_active_local_file",
+        },
         # Program
         "Fullscreen": {
             "title": translate("Actions", "Fullscreen"),

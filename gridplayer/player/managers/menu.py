@@ -262,6 +262,7 @@ SECTIONS = MappingProxyType(
                 "Disable Click Pause",
                 "Disable Wheel Seek",
             ),
+            "Mark Time",
         ],
         "program": [
             "Fullscreen",

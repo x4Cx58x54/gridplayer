@@ -251,6 +251,22 @@ class Ui_SettingsDialog(object):
         self.playlistDisableWheelSeek = QtWidgets.QCheckBox(self.page_defaults_playlist)
         self.playlistDisableWheelSeek.setObjectName("playlistDisableWheelSeek")
         self.lay_page_defaults_playlist.addWidget(self.playlistDisableWheelSeek)
+        self.formLayout_10 = QtWidgets.QFormLayout()
+        self.formLayout_10.setObjectName("formLayout_10")
+        self.formLayout_10.setFieldGrowthPolicy(
+            QtWidgets.QFormLayout.ExpandingFieldsGrow
+        )
+        self.playlistTimeMarksLogPathLabel = QtWidgets.QLabel(self.page_defaults_playlist)
+        self.playlistTimeMarksLogPathLabel.setObjectName("playlistTimeMarksLogPathLabel")
+        self.playlistTimeMarksLogPath = QtWidgets.QPushButton(self.page_defaults_playlist)
+        self.playlistTimeMarksLogPath.setObjectName("playlistTimeMarksLogPath")
+        self.formLayout_10.setWidget(
+            0, QtWidgets.QFormLayout.LabelRole, self.playlistTimeMarksLogPathLabel
+        )
+        self.formLayout_10.setWidget(
+            0, QtWidgets.QFormLayout.FieldRole, self.playlistTimeMarksLogPath
+        )
+        self.lay_page_defaults_playlist.addLayout(self.formLayout_10)
         self.formLayout_2 = QtWidgets.QFormLayout()
         self.formLayout_2.setFieldGrowthPolicy(
             QtWidgets.QFormLayout.FieldsStayAtSizeHint
@@ -635,6 +651,9 @@ class Ui_SettingsDialog(object):
         )
         self.playlistDisableWheelSeek.setText(
             _translate("SettingsDialog", "Disable seek with mouse wheel")
+        )
+        self.playlistTimeMarksLogPathLabel.setText(
+            _translate("SettingsDialog", "Time marks log location:")
         )
         self.playlistSeekSyncModeLabel.setText(
             _translate("SettingsDialog", "Seek sync mode")
