@@ -6,6 +6,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [0.4.4] - 2022-11-30
+
+### Added
+
+- Show millisecond on overlay ([f2c1675](https://github.com/x4Cx58x54/gridplayer/commit/f2c1675957f11b5696af59baa9fedd7112302b5b))
+- Support copy position on mid click ([c671d90](https://github.com/x4Cx58x54/gridplayer/commit/c671d90272947efe4894f6018bc352836924dab4))
+- Marking time into csv log ([82509ea](https://github.com/x4Cx58x54/gridplayer/commit/82509eae41d0224f7093b1e9432ae2da0177598d))
+
+### Changed
+
+- Change default setting for use of time marking ([1c93ce8](https://github.com/x4Cx58x54/gridplayer/commit/1c93ce842fe5c8241f9b23b4a2030bcc337b5549))
+
 ## [0.4.3] - 2022-07-18
 
 ### Fixed

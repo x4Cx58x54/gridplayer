@@ -30,6 +30,18 @@ information about the position, sound volume, loops, aspect ratio, etc.
 - Easy swap videos with drag-n-drop
 - Playlist retains settings for each video
 
+## About this fork (x4Cx58x54)
+
+This fork is intended for syncing multi-view videos. Installers are published on
+[release page of this fork](https://github.com/x4Cx58x54/gridplayer/releases).
+Note that other links in this file points to that of the upstream repository.
+
+Features exclusive on this fork:
+
+- Show milliseconds
+- Copy current video position on middle click
+- Mark time: record all video positions (keyboard shortcut `M`) in a csv file (settings -> playlist -> time marks log location)
+
 ## Translation
 
 GridPlayer now supports internationalization! Anyone with a handful of free time and
