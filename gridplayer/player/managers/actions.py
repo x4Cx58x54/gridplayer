@@ -135,7 +135,7 @@ COMMANDS = MappingProxyType(
         },
         "Next frame": {
             "title": translate("Actions", "Next frame"),
-            "key": "S",
+            "key": "F",
             "icon": "next-frame",
             "func": ("active", "manual_seek", "next_frame"),
             "show_if": "is_active_seekable",
@@ -503,7 +503,7 @@ COMMANDS = MappingProxyType(
         },
         "Next frame [ALL]": {
             "title": translate("Actions", "Next frame"),
-            "key": "Shift+S",
+            "key": "Shift+F",
             "icon": "next-frame",
             "func": ("all", "next_frame"),
             "show_if": "is_any_videos_seekable",
@@ -953,7 +953,7 @@ COMMANDS = MappingProxyType(
         # Program
         "Fullscreen": {
             "title": translate("Actions", "Fullscreen"),
-            "key": "F",
+            "key": "Enter",
             "icon": "fullscreen",
             "func": "fullscreen",
             "check_if": "is_fullscreen",
